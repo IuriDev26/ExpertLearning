@@ -1,4 +1,4 @@
-namespace ExpertLearning.Application.Abstractions;
+namespace ExpertLearning.Application.SharedContext.Abstractions;
 
 public class Result<T>
 {

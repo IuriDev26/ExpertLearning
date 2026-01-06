@@ -7,6 +7,8 @@ public class Flashcard : Entity
 {
     public Question Question { get; } = null!;
     public FlashcardAnswer Answer { get; } = null!;
+    private List<Answer> _answerHistory = [];
+    public IReadOnlyCollection<Answer> AnswerHistory => _answerHistory.AsReadOnly();
 
     private Flashcard(Question question, FlashcardAnswer answer)
     {
@@ -14,7 +16,18 @@ public class Flashcard : Entity
         Answer = answer;
     }
     
+    private Flashcard(int id, Question question, FlashcardAnswer answer)
+    {
+        Id = id;
+        Question = question;
+        Answer = answer;
+    }
+    
     private Flashcard() {}
     
-    private static Flashcard Create(Question question, FlashcardAnswer answer) => new Flashcard(question, answer);
+    public static Flashcard Create(Question question, FlashcardAnswer answer) => new Flashcard(question, answer);
+    public static Flashcard Mock(int id, Question question, FlashcardAnswer answer) => new Flashcard(id, question, answer);
+    
+
+    public void AddAnswer(Answer answer) => _answerHistory.Add(answer);
 }

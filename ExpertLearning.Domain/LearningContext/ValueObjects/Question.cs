@@ -13,5 +13,5 @@ public record Question : ValueObject
     
     private Question() {}
     
-    public static Question Create(string name) => new Question(name);
+    public static Question Create(string content) => new Question(content);
 }

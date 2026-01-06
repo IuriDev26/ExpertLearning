@@ -14,9 +14,17 @@ public class Subject  : Entity
         Name = name;
     }
     
+    private Subject(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+    
     private Subject() {}
 
     public static Subject Create(string name) => new Subject(name);
+
+    public static Subject Mock(int id, string name) => new Subject(id, name);
     
     public void AddFlashcard(Flashcard flashcard) => _flashcards.Add(flashcard);
 

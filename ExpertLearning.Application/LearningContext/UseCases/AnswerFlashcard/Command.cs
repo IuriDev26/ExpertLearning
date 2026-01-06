@@ -1,0 +1,23 @@
+using ExpertLearning.Application.SharedContext.UseCases.Abstractions;
+using ExpertLearning.Domain.LearningContext.Entities;
+using ExpertLearning.Domain.LearningContext.Enums;
+using Flunt.Validations;
+
+namespace ExpertLearning.Application.LearningContext.UseCases.AnswerFlashcard;
+
+public class Command(int flashcardId, EAnswerLevel answerLevel) : Request<Answer>
+{
+    public int FlashcardId { get; } =  flashcardId;
+    public EAnswerLevel AnswerLevel { get; } = answerLevel;
+    
+    public override bool Validate()
+    {
+        var contract = new Contract<Answer>()
+            .Requires()
+            .IsGreaterThan(FlashcardId, 0, "FlashcardId", "O ID informado é inválido");
+        
+        AddNotifications(contract);
+        
+        return Notifications.Count == 0;
+    }
+}
