@@ -1,6 +1,8 @@
 using ExpertLearning.Application.SharedContext.Abstractions;
+using ExpertLearning.Application.SharedContext.Extensions.Flunt;
 using ExpertLearning.Application.SharedContext.Repositories;
 using ExpertLearning.Domain.LearningContext.Entities;
+using ExpertLearning.Domain.SharedContext.Errors;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.CreateFlashcard;
 
@@ -18,7 +20,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Flashcar
         {
             if (!request.Validate())
             {
-                result.AddError(request.GetNotificationsMessage());
+                result.AddErrors(request.GetNotificationsAsErrors());
                 return result;
             }
 
@@ -28,7 +30,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Flashcar
 
             if (subject is null)
             {
-                result.AddError("Não foi possível criar o flashcard. O assunto informado não existe.");
+                result.AddError(Errors.SubjectNotFoundError);
                 return result;
             }
             
@@ -41,7 +43,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Flashcar
         }
         catch (Exception err)
         {
-            result.AddError(err.Message);
+            result.AddError(Error.GenericError(err.Message));
             return result;
         }
     }

@@ -1,6 +1,8 @@
 using ExpertLearning.Application.SharedContext.Abstractions;
+using ExpertLearning.Application.SharedContext.Extensions.Flunt;
 using ExpertLearning.Application.SharedContext.Repositories;
 using ExpertLearning.Domain.LearningContext.Entities;
+using ExpertLearning.Domain.SharedContext.Errors;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.AnswerFlashcard;
 
@@ -20,7 +22,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Answer>
 
             if (!request.Validate())
             {
-                result.AddError(request.GetNotificationsMessage());
+                result.AddErrors(request.GetNotificationsAsErrors());
                 return result;
             }
 
@@ -28,7 +30,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Answer>
 
             if (flashcard is null)
             {
-                result.AddError("Flashcard não encontrado. Não foi possível respondê-lo");
+                result.AddError(Errors.FlashcardNotFound);
                 return result;
             }
             
@@ -39,7 +41,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Answer>
 
             if (flashcard is null)
             {
-                result.AddError("Falha ao atruibuir resposta ao flashcard");
+                result.AddError(Errors.FailAssignAnswerFlashcardError);
                 return result;
             }
             
@@ -49,7 +51,7 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Answer>
         }
         catch (Exception e)
         {
-            result.AddError(e.Message);
+            result.AddError(Error.GenericError(e.Message));
             return await Task.FromResult(result);
         }
         

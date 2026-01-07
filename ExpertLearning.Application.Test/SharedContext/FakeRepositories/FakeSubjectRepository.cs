@@ -8,6 +8,7 @@ public class FakeSubjectRepository : ISubjectRepository
     private List<Subject> MockedSubjects { get; } = [];
     private List<Flashcard> MockedFlashcards { get; } = [];
     private int _countId = 1;
+    private int _countIdFlashcard = 1;
 
     public async Task<Subject> CreateAsync(Subject subject)
     {
@@ -31,13 +32,25 @@ public class FakeSubjectRepository : ISubjectRepository
         return await Task.FromResult(subject);
     }
 
-    public Task<Flashcard?> GetFlashcardByIdAsync(int flashcardId)
+    public async Task<Flashcard?> GetFlashcardByIdAsync(int flashcardId)
+        => await Task.FromResult(MockedFlashcards.FirstOrDefault(x => x.Id == flashcardId));
+
+    public async Task<Flashcard?> UpdateFlashcardAsync(Flashcard flashcard)
     {
-        throw new NotImplementedException();
+        Flashcard? oldFlashcard = MockedFlashcards.FirstOrDefault( x => flashcard.Id == x.Id);
+
+        if (oldFlashcard is null)
+            return null;
+        
+        int flashcardIndex = MockedFlashcards.IndexOf(oldFlashcard);
+        MockedFlashcards[flashcardIndex] = flashcard;
+        return await Task.FromResult(flashcard);
     }
 
-    public Task<Flashcard?> UpdateFlashcardAsync(Flashcard flashcard)
+    public Flashcard SeedFlashcard(Flashcard flashcard)
     {
-        throw new NotImplementedException();
+        Flashcard newFlashcard = Flashcard.Mock(_countIdFlashcard++, flashcard.Question,  flashcard.Answer);
+        MockedFlashcards.Add(newFlashcard);
+        return newFlashcard;
     }
 }

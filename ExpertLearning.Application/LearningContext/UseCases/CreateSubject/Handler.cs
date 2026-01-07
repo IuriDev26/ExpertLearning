@@ -1,6 +1,8 @@
 using ExpertLearning.Application.SharedContext.Abstractions;
+using ExpertLearning.Application.SharedContext.Extensions.Flunt;
 using ExpertLearning.Application.SharedContext.Repositories;
 using ExpertLearning.Domain.LearningContext.Entities;
+using ExpertLearning.Domain.SharedContext.Errors;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.CreateSubject;
 
@@ -14,7 +16,7 @@ public class Handler(ISubjectRepository subjectRepository) : IHandler<Command, S
         {
             if (!request.Validate())
             {
-                result.AddError(request.GetNotificationsMessage());
+                result.AddErrors(request.GetNotificationsAsErrors());
                 return result;
             }
             
@@ -27,7 +29,7 @@ public class Handler(ISubjectRepository subjectRepository) : IHandler<Command, S
         }
         catch (Exception e)
         {
-            result.AddError(e.Message);
+            result.AddError(Error.GenericError(e.Message));
             return result;
         }
     }
