@@ -14,9 +14,10 @@ public class UnitTests
         var repository = new FakeSubjectRepository();
         var handler = new Handler(repository);
 
+        var subject = Subject.Mock(57, "História");
         var question = Question.Create("Quem inventou o avião?");
         var answer = FlashcardAnswer.Create("Os Irmãos Wright");
-        var flashcard = Flashcard.Create(question, answer);
+        var flashcard = Flashcard.Create(subject.Id, question, answer);
         
         flashcard = repository.SeedFlashcard(flashcard);
         var command = new Command(flashcard.Id, AnswerLevel.Excellent);

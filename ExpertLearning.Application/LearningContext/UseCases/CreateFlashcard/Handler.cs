@@ -24,15 +24,15 @@ public class Handler(ISubjectRepository repository) : IHandler<Command, Flashcar
                 return result;
             }
 
-            var flashcard = Flashcard.Create(request.Question, request.Answer);
-
             Subject? subject = await repository.GetByIdAsync(request.SubjectId);
-
+            
             if (subject is null)
             {
                 result.AddError(Errors.SubjectNotFoundError);
                 return result;
             }
+            
+            var flashcard = Flashcard.Create(subject.Id, request.Question, request.Answer);
             
             subject.AddFlashcard(flashcard);
             await repository.UpdateAsync(subject);

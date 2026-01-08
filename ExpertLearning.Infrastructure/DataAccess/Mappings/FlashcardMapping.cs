@@ -10,9 +10,10 @@ public class FlashcardMapping : IEntityTypeConfiguration<Flashcard>
     {
         builder.ToTable("flashcards");
         
-        builder
-            .HasKey(x => x.Id)
-            .HasName("flashcard_pkey");
+        builder.Property(x => x.SubjectId)
+            .HasColumnName("subject_id")
+            .HasColumnType("integer")
+            .IsRequired();
 
         builder.OwnsOne(x => x.Answer)
             .Property(x => x.Content)

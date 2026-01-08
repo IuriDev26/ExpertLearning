@@ -49,7 +49,7 @@ public class FakeSubjectRepository : ISubjectRepository
 
     public Flashcard SeedFlashcard(Flashcard flashcard)
     {
-        Flashcard newFlashcard = Flashcard.Mock(_countIdFlashcard++, flashcard.Question,  flashcard.Answer);
+        Flashcard newFlashcard = Flashcard.Mock(_countIdFlashcard++, flashcard.SubjectId, flashcard.Question,  flashcard.Answer);
         MockedFlashcards.Add(newFlashcard);
         return newFlashcard;
     }

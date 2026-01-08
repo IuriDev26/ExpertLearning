@@ -10,9 +10,6 @@ public class AnswerMapping : IEntityTypeConfiguration<Answer>
     {
         builder.ToTable("answers");
         
-        builder.HasKey(a => a.Id)
-            .HasName("answer_pkey");
-
         builder.OwnsOne(x => x.AnswerLevel)
             .Property(x => x.Code)
             .HasColumnType("nvarchar")
