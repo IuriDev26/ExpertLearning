@@ -29,7 +29,13 @@ public class AppDbContext : DbContext
                 modelBuilder
                     .Entity(entityType.ClrType)
                     .HasKey(nameof(Entity.Id))
-                    .HasName($"{entityType.ClrType.Name}_id");
+                    .HasName($"{entityType.ClrType.Name.ToLower()}_pkey");
+                
+                modelBuilder
+                    .Entity(entityType.ClrType)
+                    .Property(nameof(Entity.Id))
+                    .HasColumnName("id")
+                    .IsRequired();
                 
                 modelBuilder
                     .Entity(entityType.ClrType)

@@ -15,13 +15,9 @@ public class SubjectMapping : IEntityTypeConfiguration<Subject>
         
         builder.Property(s => s.Name)
             .HasColumnName("name")
-            .HasColumnType("nvarchar")
+            .HasColumnType("varchar")
             .HasMaxLength(128)
             .IsRequired();
         
-        builder.HasMany(s => s.Flashcards)
-            .WithOne()
-            .HasForeignKey("subject_id")
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
