@@ -7,7 +7,7 @@ public class Flashcard : Entity
 {
     public Question Question { get; } = null!;
     public FlashcardAnswer Answer { get; } = null!;
-    private List<Answer> _answerHistory = [];
+    private readonly List<Answer> _answerHistory = [];
     public IReadOnlyCollection<Answer> AnswerHistory => _answerHistory.AsReadOnly();
 
     private Flashcard(Question question, FlashcardAnswer answer)
