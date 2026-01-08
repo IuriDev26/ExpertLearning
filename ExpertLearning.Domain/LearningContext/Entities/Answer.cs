@@ -1,4 +1,4 @@
-using ExpertLearning.Domain.LearningContext.Enums;
+using ExpertLearning.Domain.LearningContext.ValueObjects;
 using ExpertLearning.Domain.SharedContext.Entities;
 
 namespace ExpertLearning.Domain.LearningContext.Entities;
@@ -6,9 +6,9 @@ namespace ExpertLearning.Domain.LearningContext.Entities;
 public class Answer : Entity
 {
     public int FlashcardId { get; }
-    public EAnswerLevel AnswerLevel { get;  }
+    public AnswerLevel AnswerLevel { get; } = null!;
 
-    private Answer(int flashcardId, EAnswerLevel answerLevel)
+    private Answer(int flashcardId, AnswerLevel answerLevel)
     {
         FlashcardId = flashcardId;
         AnswerLevel = answerLevel;
@@ -16,5 +16,5 @@ public class Answer : Entity
     
     private Answer() {}
     
-    public static Answer Create(int flashcardId, EAnswerLevel answerLevel) => new Answer(flashcardId, answerLevel);
+    public static Answer Create(int flashcardId, AnswerLevel answerLevel) => new Answer(flashcardId, answerLevel);
 }

@@ -2,7 +2,6 @@ using ExpertLearning.Application.LearningContext.UseCases.AnswerFlashcard;
 using ExpertLearning.Application.SharedContext.Abstractions;
 using ExpertLearning.Application.Test.SharedContext.FakeRepositories;
 using ExpertLearning.Domain.LearningContext.Entities;
-using ExpertLearning.Domain.LearningContext.Enums;
 using ExpertLearning.Domain.LearningContext.ValueObjects;
 
 namespace ExpertLearning.Application.Test.LearningContext.UseCases.AnswerFlashcard;
@@ -20,13 +19,13 @@ public class UnitTests
         var flashcard = Flashcard.Create(question, answer);
         
         flashcard = repository.SeedFlashcard(flashcard);
-        var command = new Command(flashcard.Id, EAnswerLevel.Excellent);
+        var command = new Command(flashcard.Id, AnswerLevel.Excellent);
         
         Result<Answer> result = await handler.HandleAsync(command);
         
         Assert.True(result.Success);
         Assert.NotNull(result.Data);
-        Assert.Equal(EAnswerLevel.Excellent, result.Data.AnswerLevel);
+        Assert.Equal(AnswerLevel.Excellent, result.Data.AnswerLevel);
     }
     
     [Fact]
@@ -35,7 +34,7 @@ public class UnitTests
         var repository = new FakeSubjectRepository();
         var handler = new Handler(repository);
         
-        var command = new Command(999, EAnswerLevel.Excellent);
+        var command = new Command(999, AnswerLevel.Excellent);
         
         Result<Answer> result = await handler.HandleAsync(command);
         
