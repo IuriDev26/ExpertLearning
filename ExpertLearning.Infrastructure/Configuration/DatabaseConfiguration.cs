@@ -1,3 +1,4 @@
+using ExpertLearning.Application.SharedContext.UnitOfWork;
 using ExpertLearning.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ public static class DatabaseConfiguration
         string connectionString)
     {
         services.AddDbContext<AppDbContext>( options => options.UseNpgsql(connectionString) );
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         return services;
     }
 }

@@ -2,6 +2,7 @@ using ExpertLearning.Application.SharedContext.UseCases.Abstractions;
 using ExpertLearning.Domain.LearningContext.Entities;
 using ExpertLearning.Domain.LearningContext.ValueObjects;
 using Flunt.Validations;
+using IuriDev26.Mediator.Abstractions;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.AnswerFlashcard;
 

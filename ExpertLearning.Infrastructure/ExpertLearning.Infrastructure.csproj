@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExpertLearning.Application\ExpertLearning.Application.csproj" />
     <ProjectReference Include="..\ExpertLearning.Domain\ExpertLearning.Domain.csproj" />
   </ItemGroup>
 

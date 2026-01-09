@@ -3,17 +3,14 @@ using ExpertLearning.Application.SharedContext.Extensions.Flunt;
 using ExpertLearning.Application.SharedContext.Repositories;
 using ExpertLearning.Domain.LearningContext.Entities;
 using ExpertLearning.Domain.SharedContext.Errors;
+using IuriDev26.Mediator.Abstractions;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.CreateFlashcard;
 
-public class Handler(ISubjectRepository repository) : IHandler<Command, Flashcard>
+public class Handler(ISubjectRepository repository) : Handler<Command, Flashcard>
 {
-    public Task<Flashcard> HandleAsync(Command request, CancellationToken cancellationToken = new CancellationToken())
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result<Flashcard>> HandleAsync(Command request)
+    
+    public override async Task<Result<Flashcard>> HandleAsync(Command request, CancellationToken cancellationToken = new CancellationToken())
     {
         var result = new Result<Flashcard>();
         try

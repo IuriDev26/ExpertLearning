@@ -3,17 +3,14 @@ using ExpertLearning.Application.SharedContext.Extensions.Flunt;
 using ExpertLearning.Application.SharedContext.Repositories;
 using ExpertLearning.Domain.LearningContext.Entities;
 using ExpertLearning.Domain.SharedContext.Errors;
+using IuriDev26.Mediator.Abstractions;
 
 namespace ExpertLearning.Application.LearningContext.UseCases.AnswerFlashcard;
 
-public class Handler(ISubjectRepository repository) : IHandler<Command, Answer>
+public class Handler(ISubjectRepository repository) : Handler<Command, Answer>
 {
-    public Task<Answer> HandleAsync(Command request, CancellationToken cancellationToken = new CancellationToken())
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result<Answer>> HandleAsync(Command request)
+    
+    public override async Task<Result<Answer>> HandleAsync(Command request, CancellationToken cancellationToken = new CancellationToken())
     {
         var result = new Result<Answer>();
 

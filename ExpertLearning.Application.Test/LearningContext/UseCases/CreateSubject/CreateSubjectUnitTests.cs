@@ -14,7 +14,8 @@ public class CreateSubjectUnitTests()
         const string subjectName = "AnySubject";
         var command = new Command(name: subjectName);
         var repository = new FakeSubjectRepository();
-        var handler = new Handler(repository);
+        var unitOfWork = new FakeUnitOfWork();
+        var handler = new Handler(repository, unitOfWork);
 
         Result<Subject> result = await handler.HandleAsync(command);
         Subject? response = result.Data;
