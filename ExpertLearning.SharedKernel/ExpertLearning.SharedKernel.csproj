@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flunt" Version="2.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ExpertLearning.SharedKernel\ExpertLearning.SharedKernel.csproj" />
+    <Reference Include="Flunt">
+      <HintPath>..\..\..\..\.nuget\packages\flunt\2.0.5\lib\netstandard2.0\Flunt.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

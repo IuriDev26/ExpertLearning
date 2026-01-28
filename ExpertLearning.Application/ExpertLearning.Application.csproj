@@ -10,6 +10,7 @@
     <PackageReference Include="Flunt" Version="2.0.5" />
     <PackageReference Include="IuriDev26.Mediator" Version="1.0.1" />
     <PackageReference Include="IuriDev26.Mediator.Abstractions" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>

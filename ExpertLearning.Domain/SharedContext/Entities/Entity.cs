@@ -1,6 +1,8 @@
+using ExpertLearning.Domain.SharedContext.Exceptions;
+
 namespace ExpertLearning.Domain.SharedContext.Entities;
 
-public abstract class Entity
+public abstract class Entity : IValidatable
 {
     public int Id { get; protected set; }
     public DateTime CreatedAt { get; }
