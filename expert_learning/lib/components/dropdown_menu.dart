@@ -1,22 +1,32 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:expert_learning/theme/app_colors.dart';
+import 'package:expert_learning/theme/color_scheme_extension.dart';
+import 'package:expert_learning/theme/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 
-class AppDropdownMenu extends StatefulWidget {
-  const AppDropdownMenu({super.key});
+class AppDropdownMenu<T> extends StatefulWidget {
+  final String label;
+  final String innerLabel;
+  final String searchLabel;
+  final List<DropdownMenuItem<T>> items;
+  final bool Function(DropdownMenuItem<T> item, String searchedValue)?
+  searchMatchFn;
+  const AppDropdownMenu({
+    super.key,
+    required this.label,
+    required this.innerLabel,
+    required this.searchLabel,
+    required this.items,
+    this.searchMatchFn,
+  });
 
   @override
-  State<AppDropdownMenu> createState() => _AppDropdownMenuState();
+  State<AppDropdownMenu<T>> createState() => _AppDropdownMenuState<T>();
 }
 
-class _AppDropdownMenuState extends State<AppDropdownMenu> {
-  final List<String> items = [
-    "Portugues",
-    "English",
-    "Development",
-    "Software Engineering",
-  ];
-  String? selectedValue;
+class _AppDropdownMenuState<T> extends State<AppDropdownMenu<T>> {
+
+  T? selectedValue;
   final TextEditingController controller = TextEditingController();
   bool _isMenuOpen = false;
 
@@ -30,7 +40,7 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
       ButtonStyleData(
         height: 60,
         decoration: BoxDecoration(
-          color: AppColors.secondaryBackground,
+          color: Theme.of(context).colorScheme.secondarySurface,
           borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
           border: Border.all(
             width: 2,
@@ -43,7 +53,7 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
       ButtonStyleData(
         height: 60,
         decoration: BoxDecoration(
-          color: AppColors.secondaryBackground,
+          color: Theme.of(context).colorScheme.secondarySurface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Theme.of(context).colorScheme.outline),
         ),
@@ -52,16 +62,16 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
   DropdownStyleData _dropdownStyle(BuildContext context) => DropdownStyleData(
     maxHeight: 300,
     decoration: BoxDecoration(
-      color: AppColors.secondaryBackground,
+      color: Theme.of(context).colorScheme.secondarySurface,
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
       border: _dropdownOpenedBorder(context),
     ),
   );
 
-  DropdownSearchData<String> _dropdownSearch(BuildContext context) =>
+  DropdownSearchData<T> _dropdownSearch(BuildContext context) =>
       DropdownSearchData(
         searchController: controller,
-        searchInnerWidgetHeight: 0,
+        searchInnerWidgetHeight: 60,
         searchInnerWidget: Container(
           height: 60,
           decoration: BoxDecoration(
@@ -78,7 +88,7 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
                 Icons.search,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              hintText: 'Pesquisar...',
+              hintText: widget.searchLabel,
               hintStyle: Theme.of(context).textTheme.bodyMedium,
               contentPadding: EdgeInsets.only(bottom: 8),
               fillColor: AppColors.overlayDark,
@@ -90,9 +100,7 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
             ),
           ),
         ),
-        searchMatchFn: (item, searchValue) =>
-            item.value?.toLowerCase().contains(searchValue.toLowerCase()) ??
-            false,
+        searchMatchFn: widget.searchMatchFn,
       );
 
   _onMenuStateChange(bool isOpen) {
@@ -105,29 +113,15 @@ class _AppDropdownMenuState extends State<AppDropdownMenu> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Assunto', style: Theme.of(context).textTheme.titleMedium),
-          ],
-        ),
-        SizedBox(height: 10),
         DropdownButtonHideUnderline(
-          child: DropdownButton2<String>(
+          child: DropdownButton2<T>(
             isExpanded: true,
 
             hint: Text(
-              'Selecione um assunto',
-              style: Theme.of(context).textTheme.titleSmall,
+              widget.innerLabel,
+              style: Theme.of(context).textTheme.titleMediumOpaque,
             ),
-
-            items: items
-                .map(
-                  (item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)),
-                )
-                .toList(),
-
+            items: widget.items,
             value: selectedValue,
             onChanged: (value) => setState(() => selectedValue = value),
 
