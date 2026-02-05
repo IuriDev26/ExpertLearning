@@ -1,11 +1,13 @@
-import 'package:expert_learning/theme/app_colors.dart';
 import 'package:expert_learning/theme/color_scheme_extension.dart';
 import 'package:expert_learning/theme/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
+  final String placeholder;
   final double height = 150;
-  const InputText({super.key});
+  final Row? actions;
+  final TextEditingController controller;
+  const InputText({super.key, required this.placeholder, required this.controller, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +32,12 @@ class InputText extends StatelessWidget {
                 maxLines: null,
                 minLines: 5,
                 keyboardType: TextInputType.multiline,
+                controller: controller,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10),
                   hint: Text(
-                    'Quem inventou o avião?',
+                    placeholder,
                     style: Theme.of(context).textTheme.titleMediumOpaque,
                   ),
                 ),
@@ -52,10 +55,9 @@ class InputText extends StatelessWidget {
             ),
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
           ),
-          child: Row(
-            children: [
-              Icon(Icons.label_outline, color: AppColors.secondaryTextColor,)
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: actions
           ),
         ),
       ],
